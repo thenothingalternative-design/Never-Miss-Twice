@@ -62,7 +62,7 @@ async function scheduleDailyReminder(time: string) {
     await Notifications.cancelAllScheduledNotificationsAsync();
     const [hour, minute] = time.split(':').map(Number);
     await Notifications.scheduleNotificationAsync({
-      content: { title: 'Fresh morning ☀️', body: 'Time for your habit. Even the tiny version counts.' },
+      content: { title: 'Good Morning', body: 'Time for your habit. Even the tiny version counts.' },
       trigger: { type: Notifications.SchedulableTriggerInputTypes.DAILY, hour: hour || 8, minute: minute || 0 },
     });
   } catch (error) {
