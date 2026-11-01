@@ -41,25 +41,50 @@ Today doesn't count against you until you've had a chance to log it.
 ### Requirements
 
 - [Node.js](https://nodejs.org/) (LTS version)
-- The [Expo Go](https://expo.dev/go) app on your phone, or an iOS/Android emulator
 
 ### Install
+
+This will be a dev build. First, you need to set up both Android Studio and ADB: 
+https://developer.android.com/courses/pathways/android-basics-compose-unit-1-pathway-2
+https://www.howtogeek.com/125769/how-to-install-and-use-abd-the-android-debug-bridge-utility/
+
+
+In your command prompt terminal: 
 
 ```bash
 npm install
 npx expo install @react-native-async-storage/async-storage expo-notifications
 ```
-
-### Run
+Then, you need to download the app to the phone. With your phone connected to your laptop via USB, run: 
 
 ```bash
-npx expo start
+cd /path/to/where/you/cloned/the/repo # <- this is the path to habit/, not the root folder
+npx expo run:android
 ```
 
-Then scan the QR code with Expo Go, or press `i` (iOS simulator) or `a` (Android emulator).
+It should boot up with the onboarding pages the first time. As long as you don't delete the app's data, 
+it'll remember you and you won't see the onboarding page again. 
+
+### Testing different features: 
+
+Tap on any of the options, Full, Tiny, Micro. You should see your overall percentage score at the top change. 
+The lowest energy level gives a bonus score to encourage you to show up on your bad days. 
+
+You'll see the calendar at the bottom. Note that there's only one entry (because you downloaded the app a minute ago). 
+If you want to see the full calendar, you'll have to edit the code and build again: 
+
+Inside App.tsx (as of this README version, exactly at line 159): Change startdate in save({ config, startDate: toKey(new Date()), ...}) to toKey(addDays(new Date(), -10)): 
+
+```bash 
+return <Onboarding onDone={config => save({ config, startDate: toKey(addDays(new Date(), -10)), logs: {} })} />;
+```
+
+This will make it so there's 10 unlogged past days on the calendar. To see this change, you'll have to reset the app storage. Because this is a dev build, you should be able to delete app storage and cache like you could with any other app. 
+You could also delete the app entirely off your phone and rebuild it with npx expo run:android again. 
+
+If you want to see notifications working immediately, set your notification reminder to a few minutes ahead, in 24 hour 
+clock time. Make sure to allow notifications when prompted. 
 
 ## Notes
 
-- Notifications: You'll be asked for permission the first time. 
-- Your data's saved locally with AsyncStorage. Deleting the app will delete your data. 
 

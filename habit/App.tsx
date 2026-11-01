@@ -127,7 +127,7 @@ function Onboarding({ onDone }: { onDone: (config: Config) => void }) {
 //
 //
 //------------------------------------------
-const STORAGE_KEY = 'habit-minimal';
+const STORAGE_KEY = 'habit-minimal-1';
 const ENERGY_LABELS = ['Low', 'Okay', 'High'];
 const STATUS_CYCLE: (Status | undefined)[] = [undefined, 'full', 'tiny', 'micro', 'miss'];
 const STATUS_COLORS: Record<Status, string> = { full: '#2e7d32', tiny: '#81c784', micro: '#c8e6c9', miss: '#eef6ee' };
@@ -156,7 +156,7 @@ export default function App() {
 
   if (!isLoaded) return null;
   if (!data) {
-    return <Onboarding onDone={config => save({ config, startDate: toKey(new Date()), logs: {} })} />;
+    return <Onboarding onDone={config => save({ config, startDate: toKey(addDays(new Date(), -10)), logs: {} })} />;
   }
 
   const { config, startDate, logs } = data;
